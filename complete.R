@@ -13,8 +13,9 @@ complete <- function(directory, id = 1:332) {
   ## where 'id' is the monitor ID number and 'nobs' is the
   ## number of complete cases
   
-  m <- data.frame(matrix(ncol = 4))
-  names(m) <- c("Date","sulfate","nitrate","ID")
+  m <- data.frame()
+  n <- data.frame()
+  
   
   for (i in seq_along(id)) 
   {
@@ -29,19 +30,12 @@ complete <- function(directory, id = 1:332) {
         ,".csv"
         ,sep=""
       )
-    m <- rbind(m,read.csv(paste(getwd(),"/",directory,"/",filename,sep="")))
+    m <- read.csv(paste(getwd(),"/",directory,"/",filename,sep=""))
     ##print(filename)
+    ams <- subset(m,!is.na(m[,2]) & !is.na(m[,3]))
+    
+    n <- rbind(n,c(id[i],dim(ams)[1]))
   }
-  #return(m)
-  ## on veut une matrice
-  am <- as.matrix(m[2:4])
-  ## on enlève les NA
-  ams <- subset(am,!is.na(am[,2]) & !is.na(am[,3]) & !is.na(am[,1]))
-  ## on crée une matrice avec des 1...
-  amc <- cbind(ams[,3],1)
-  ## ...qu'on somme pour faire un total
-  dt <- data.table(amc)
-  dt2 <- as.matrix(dt[,sum(V2),by=V1])
-  colnames(dt2) <- c("id","nobs")
-  return(as.data.frame(dt2))
+  names(n) <- c("id","nobs")
+  return(n)
 }
