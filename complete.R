@@ -43,5 +43,5 @@ complete <- function(directory, id = 1:332) {
   dt <- data.table(amc)
   dt2 <- as.matrix(dt[,sum(V2),by=V1])
   colnames(dt2) <- c("id","nobs")
-  return(dt2)
+  return(as.data.frame(dt2))
 }
