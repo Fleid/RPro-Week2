@@ -1,4 +1,5 @@
-RPro-Week2
+# R-Programming (Week 2)
+Programming Assignment 1: Air Pollution: Instructions
 https://class.coursera.org/rprog-007/assignment/view?assignment_id=3
 ==========
 
